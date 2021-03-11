@@ -15,7 +15,7 @@ import { Bid } from './entities/bid.entity';
         const migrationsPath = `${path.resolve(__dirname, 'migration')}/*`;
         return {
           type: 'postgres',
-          logging: 'all',
+          logging: config.environment === 'test' ? false : 'all',
           url: config.dbConnectionString,
           synchronize: false,
           migrations: [migrationsPath],

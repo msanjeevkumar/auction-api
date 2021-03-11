@@ -6,4 +6,8 @@ export class Config {
   get isProduction() {
     return this.environment === 'production';
   }
+
+  get isTest() {
+    return this.environment === 'test';
+  }
 }

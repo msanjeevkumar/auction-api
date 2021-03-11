@@ -8,7 +8,6 @@ import { Auction } from '../database/entities/auction.entity';
 import { Bid } from '../database/entities/bid.entity';
 import { DatabaseModule } from '../database/database.module';
 import { UserModule } from '../user/user.module';
-import { Token } from '../common/enums/token';
 import { CommonModule } from '../common/common.module';
 
 describe('AuctionController', () => {

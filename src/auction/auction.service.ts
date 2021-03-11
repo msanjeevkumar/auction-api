@@ -121,10 +121,23 @@ export class AuctionService {
       [auctionId],
     );
 
+    const [
+      { numOfBids },
+    ] = await this.bidRepository.manager.query(
+      `select count(id) as "numOfBids" from bid where "auctionId" = $1 and "isDeleted" = false`,
+      [auctionId],
+    );
+
     if (bids.length === 0) {
-      throw new ForbiddenException(
-        'Cannot close auction, no bids have been placed yet',
-      );
+      if (parseInt(numOfBids, 10) === 0) {
+        throw new ForbiddenException(
+          'Cannot close auction, no bids have been placed yet',
+        );
+      } else {
+        throw new ForbiddenException(
+          'Unable to determine winning bid due to no unique bids placed',
+        );
+      }
     }
 
     const [{ amount }] = bids;
@@ -137,6 +150,10 @@ export class AuctionService {
     auction.sellerWinnings = amount - platformCharge;
     auction.status = AuctionStatus.CLOSED;
     await this.auctionRepository.save(auction);
-    return amount;
+    return bid;
+  }
+
+  getAuctionDetails(auctionId: number) {
+    return this.auctionRepository.findOne(auctionId);
   }
 }

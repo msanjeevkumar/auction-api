@@ -69,6 +69,12 @@ export class AuctionController {
   @Post(':auctionId/close')
   @Roles(Role.SELLER)
   async closeAuction(@Param() params: AuctionParams) {
-    await this.auctionService.closeAuction(parseInt(params.auctionId));
+    return this.auctionService.closeAuction(parseInt(params.auctionId));
+  }
+
+  @Post(':auctionId/statement')
+  @Roles(Role.SELLER)
+  async getAuctionDetails(@Param() params: AuctionParams) {
+    return this.auctionService.getAuctionDetails(parseInt(params.auctionId));
   }
 }
