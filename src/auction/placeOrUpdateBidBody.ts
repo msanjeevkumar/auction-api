@@ -1,6 +1,6 @@
-import { IsNumberString } from 'class-validator';
+import { IsNumber, IsNumberString } from 'class-validator';
 
 export class PlaceOrUpdateBidBody {
-  @IsNumberString({ no_symbols: true })
+  @IsNumber()
   amount: string;
 }

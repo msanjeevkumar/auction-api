@@ -13,6 +13,6 @@ export class UserController {
       payload.role,
     );
 
-    return user.apiKey;
+    return user;
   }
 }
