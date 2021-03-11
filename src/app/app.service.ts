@@ -13,9 +13,4 @@ export class AppService {
   getHello(): string {
     return 'Hello World!';
   }
-
-  async createUser(username: string, role: Role) {
-    const [user] = await this.userRepository.save([{ username, role }]);
-    return user;
-  }
 }

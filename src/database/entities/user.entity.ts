@@ -1,7 +1,6 @@
-import { Exclude } from 'class-transformer';
-import { BaseEntity } from './base.entity';
-import { BeforeInsert, Column, Entity, Generated } from 'typeorm';
+import { Column, Entity, Generated } from 'typeorm';
 import { Role } from '../../common/enums/role.enum';
+import { BaseEntity } from './base.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -10,7 +9,6 @@ export class User extends BaseEntity {
 
   @Generated('uuid')
   @Column()
-  @Exclude()
   public apiKey: string;
 
   @Column('character varying')

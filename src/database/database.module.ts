@@ -4,6 +4,7 @@ import { Token } from '../common/enums/token';
 import { Config } from '../common/config/config';
 import { User } from './entities/user.entity';
 import * as path from 'path';
+import { Auction } from './entities/auction.entity';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import * as path from 'path';
           synchronize: false,
           migrations: [migrationsPath],
           migrationsRun: true,
-          entities: [User],
+          entities: [User, Auction],
         };
       },
     }),
