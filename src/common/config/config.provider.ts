@@ -11,6 +11,7 @@ export const configProvider = {
     const validationSchema = Joi.object().unknown().keys({
       PORT: Joi.string().required(),
       NODE_ENV: Joi.string().required(),
+      DB_CONNECTION_STRING: Joi.string().required(),
     });
 
     const result = validationSchema.validate(env);
@@ -22,6 +23,7 @@ export const configProvider = {
     return {
       apiPort: Number.parseInt(env.PORT, 10),
       environment: env.NODE_ENV,
-    };
+      dbConnectionString: env.DB_CONNECTION_STRING,
+    } as Config;
   },
 };

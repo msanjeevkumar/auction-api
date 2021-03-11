@@ -1,0 +1,24 @@
+{
+   "type": "postgres",
+   "host": "localhost",
+   "port": 54320,
+   "username": "dev_user",
+   "password": "Password123",
+   "database": "dev_db",
+   "synchronize": false,
+   "logging": true,
+   "entities": [
+      "src/database/entities/**/*.ts"
+   ],
+   "migrations": [
+      "src/database/migration/**/*.ts"
+   ],
+   "subscribers": [
+      "src/subscriber/**/*.ts"
+   ],
+   "cli": {
+      "entitiesDir": "src/database/entities",
+      "migrationsDir": "src/database/migration",
+      "subscribersDir": "src/subscriber"
+   }
+}
