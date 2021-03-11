@@ -1,6 +1,6 @@
 import { IsNumberString } from 'class-validator';
 
-export class PlaceBidParams {
+export class AuctionParams {
   @IsNumberString(
     { no_symbols: true },
     { message: `$value is not a valid auction id` },

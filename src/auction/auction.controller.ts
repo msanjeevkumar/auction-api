@@ -1,4 +1,12 @@
-import { Body, Controller, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateAuctionPayload } from './createAuction.payload';
 import { AuctionService } from './auction.service';
 import { Roles } from '../common/roles.decorator';
@@ -6,8 +14,8 @@ import { Role } from '../common/enums/role.enum';
 import { RolesGuard } from '../common/roles.guard';
 import { User as UserEntity } from '../database/entities/user.entity';
 import { User } from '../common/user.decorator';
-import { PlaceBidParams } from './placeBidParams';
-import { PlaceBidBody } from './placeBidBody';
+import { AuctionParams } from './auctionParams';
+import { PlaceOrUpdateBidBody } from './placeOrUpdateBidBody';
 
 @UseGuards(RolesGuard)
 @Controller('auction')
@@ -26,14 +34,41 @@ export class AuctionController {
   @Post(':auctionId/bid')
   @Roles(Role.BUYER)
   async placeBid(
-    @Param() params: PlaceBidParams,
-    @Body() body: PlaceBidBody,
+    @Param() params: AuctionParams,
+    @Body() body: PlaceOrUpdateBidBody,
     @User() user: UserEntity,
   ) {
-    await this.auctionService.placeBid(
+    await this.auctionService.placeOrUpdateBid(
       parseInt(params.auctionId, 10),
       parseInt(body.amount, 10),
       user,
     );
+  }
+
+  @Put(':auctionId/bid')
+  @Roles(Role.BUYER)
+  async updateBid(
+    @Param() params: AuctionParams,
+    @Body() body: PlaceOrUpdateBidBody,
+    @User() user: UserEntity,
+  ) {
+    await this.auctionService.placeOrUpdateBid(
+      parseInt(params.auctionId, 10),
+      parseInt(body.amount, 10),
+      user,
+      true,
+    );
+  }
+
+  @Delete(':auctionId/bid')
+  @Roles(Role.BUYER)
+  async withdrawBid(@Param() params: AuctionParams, @User() user: UserEntity) {
+    await this.auctionService.withdrawBid(parseInt(params.auctionId), user);
+  }
+
+  @Post(':auctionId/close')
+  @Roles(Role.SELLER)
+  async closeAuction(@Param() params: AuctionParams) {
+    await this.auctionService.closeAuction(parseInt(params.auctionId));
   }
 }
