@@ -1,16 +1,17 @@
-import { BaseEntity } from './base.entity';
 import { Exclude } from 'class-transformer';
-import { Column, Entity } from 'typeorm';
+import { BaseEntity } from './base.entity';
+import { BeforeInsert, Column, Entity, Generated } from 'typeorm';
 import { Role } from '../../common/enums/role.enum';
 
 @Entity()
 export class User extends BaseEntity {
   @Column({ unique: true })
-  public email: string;
+  public username: string;
 
+  @Generated('uuid')
   @Column()
   @Exclude()
-  public password: string;
+  public apiKey: string;
 
   @Column('character varying')
   role: Role;
