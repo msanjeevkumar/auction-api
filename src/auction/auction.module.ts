@@ -7,9 +7,10 @@ import { AuthMiddleware } from '../common/auth.middleware';
 import { UserModule } from '../user/user.module';
 import { UserService } from '../user/user.service';
 import { User } from '../database/entities/user.entity';
+import { Bid } from '../database/entities/bid.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Auction, User]), UserModule],
+  imports: [TypeOrmModule.forFeature([Auction, User, Bid]), UserModule],
   providers: [AuctionService, UserService],
   controllers: [AuctionController],
 })

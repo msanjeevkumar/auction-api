@@ -5,6 +5,7 @@ import { Config } from '../common/config/config';
 import { User } from './entities/user.entity';
 import * as path from 'path';
 import { Auction } from './entities/auction.entity';
+import { Bid } from './entities/bid.entity';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { Auction } from './entities/auction.entity';
           synchronize: false,
           migrations: [migrationsPath],
           migrationsRun: true,
-          entities: [User, Auction],
+          entities: [User, Auction, Bid],
         };
       },
     }),
