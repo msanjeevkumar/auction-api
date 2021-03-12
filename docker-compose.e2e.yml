@@ -1,0 +1,27 @@
+version: "3"
+services:
+  dev_db:
+    image: "postgres:11"
+    container_name: "dev-db"
+    environment:
+      - POSTGRES_USER=dev_user
+      - POSTGRES_PASSWORD=Password123
+      - POSTGRES_DB=dev_db
+    ports:
+      - "54323:5432"
+    volumes:
+      - ~/dev_db:/var/lib/postgresql/dev_db
+  auction-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: auction-api:1.0
+    ports:
+      - "4000:4000"
+    command: bash -c 'while !</dev/tcp/dev_db/5432; do sleep 1; done; npm run test:e2e'
+    links:
+      - dev_db
+    environment:
+      - DB_CONNECTION_STRING=postgres://dev_user:Password123@dev_db:5432/dev_db
+    depends_on:
+      - dev_db
